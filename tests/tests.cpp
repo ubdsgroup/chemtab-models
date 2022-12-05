@@ -4,7 +4,7 @@
 #include "finiteVolume/compressibleFlowFields.hpp"
 #include "gtest/gtest.h"
 #include "localPath.hpp"
-#include "chemTabModelRoot.hpp"
+#include "modelPath.hpp"
 
 /*******************************************************************************************************
  * Tests for expected input/outputs
