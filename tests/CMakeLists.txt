@@ -5,7 +5,6 @@ include(FetchContent)
 
 # ABLATE must be available for the project.  If the ABLATE_PATH is not specified it will download the version specified in FetchContent_Declare
 set(ABLATE_PATH "" CACHE PATH "Custom path to local ABLATE project.  If specified this will be used instead of downloading ABLATE.")
-message(ABLATE_PATH ${ABLATE_PATH})
 
 if("${ABLATE_PATH}" STREQUAL "")
     message(STATUS "ABLATE_PATH was not specified.  ABLATE is being downloaded and built.")
@@ -13,16 +12,14 @@ if("${ABLATE_PATH}" STREQUAL "")
     # Download and make ablate available to the client
     FetchContent_Declare(
             ablate
-#            GIT_REPOSITORY https://github.com/UBCHREST/ablate.git
-#            GIT_TAG main
-            GIT_REPOSITORY https://github.com/mmcgurn/ablate.git
-            GIT_TAG mcgurn/chem-model
+            GIT_REPOSITORY https://github.com/UBCHREST/ablate.git
+            GIT_TAG main
     )
     FetchContent_MakeAvailable(ablate)
 
 else()
     message(STATUS "Configuring with ABLATE_PATH: ${ABLATE_PATH}")
-    add_subdirectory(${ABLATE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/ablate-build-directory)
+    add_subdirectory(${ABLATE_PATH})
 endif()
 
 # Set the project details
