@@ -7,7 +7,7 @@ WORKDIR /build-chemtab
 
 # Configure & build
 run cmake -DCMAKE_BUILD_TYPE=Release -S /source-chemtab/tests -B .
-run make
+run make -j $(nproc)
 
 # Specify Entry Point for tests
 ENV CTEST_OUTPUT_ON_FAILURE=ON
