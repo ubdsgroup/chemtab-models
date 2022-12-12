@@ -271,6 +271,39 @@ std::function<std::vector<ChemTabModelTestParameters>()> buildTestParameters = [
     return testParameters;
 };
 
+TEST_P(ChemTabModelTestFixture, ShouldComputeProgressVariablesMassFractionsInterchangeability) {
+    GTEST_SKIP() << "Test is not working with ChemTab";
+
+    for (const auto &testTarget: testTargets) {
+        // arrange
+        auto chemTab = std::make_shared<ablate::eos::ChemTab>(GetParam().modelPath);
+        auto expectedProgressVariables = testTarget["output_cpvs"].as<std::vector<double>>();
+        auto inputMassFractions = testTarget["input_mass_fractions"].as<std::vector<double>>();
+
+        // act
+        // Size up the results based upon expected
+        std::vector<PetscReal> actualProgressVariables(expectedProgressVariables.size());
+        chemTab->ComputeProgressVariables(inputMassFractions.data(), inputMassFractions.size(),
+                                          actualProgressVariables.data(), actualProgressVariables.size());
+
+        std::vector<PetscReal> actualMassFractions(inputMassFractions.size());
+        chemTab->ComputeMassFractions(actualProgressVariables.data(), actualProgressVariables.size(),
+                                      actualMassFractions.data(), actualMassFractions.size());
+
+        // assert
+        for (std::size_t r = 0; r < actualProgressVariables.size(); r++) {
+            assert_float_close(expectedProgressVariables[r], actualProgressVariables[r])
+                                << "The value for input set [" << r << "] is incorrect for model "
+                                << testTarget["testName"].as<std::string>();
+        }
+        for (std::size_t r = 0; r < actualMassFractions.size(); r++) {
+            assert_float_close(inputMassFractions[r], actualMassFractions[r])
+                                << "The value for input mass fractions [" << r << "] is incorrect for model "
+                                << testTarget["testName"].as<std::string>();
+        }
+    }
+}
+
 /**
  * Build the list of test parameters from the provided lambda
  * @return
