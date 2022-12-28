@@ -1,13 +1,13 @@
 import os, argparse
 import yaml
 
+# example metadata.yaml:
 """
 ---
 # all paths are assumed to be relative
 name: PCDNNV2_decomp-Wax-Orthog+Zmix
 rpath: regressor
 wpath: weights.csv
-ipath: weights_inv.csv
 mechanism: GRIMech30.yaml
 version: 1.0
 """
@@ -18,8 +18,8 @@ if __name__=='__main__':
     parser.add_argument('mech_filename', type=str, help='relative path to mechanism file to include inside the metadata.yaml file')
     args = parser.parse_args()
 
-    with open('template_metadata.yaml', 'r') as f:
-        cfg = yaml.safe_load(f)
+    # NOTE: as of right now the code ignores the rpath & wpath variables
+    cfg = {'rpath': 'regressor', 'wpath': 'weights.csv', 'version': 1.0}
     cfg['name']=os.path.basename(args.model_folder)
     cfg['mechanism']=os.path.basename(args.mech_filename)
     
