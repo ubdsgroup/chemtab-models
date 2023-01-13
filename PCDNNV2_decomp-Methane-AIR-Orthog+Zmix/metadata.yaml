@@ -1,8 +1,5 @@
----
-# all paths are assumed to be relative
+mechanism: GRIMech30.yaml
 name: PCDNNV2_decomp-Methane-AIR-Orthog+Zmix
 rpath: regressor
-wpath: weights.csv
-ipath: weights_inv.csv
-mechanism: GRIMech30.yaml
 version: 1.0
+wpath: weights.csv
