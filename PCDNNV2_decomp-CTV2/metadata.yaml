@@ -1,0 +1,5 @@
+mechanism: gri30.yaml
+name: PCDNNV2_decomp-CTV2
+rpath: regressor
+version: 2.0
+wpath: weights.csv

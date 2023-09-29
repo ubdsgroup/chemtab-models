@@ -16,10 +16,11 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description = 'makes metadata.yaml for Matt')
     parser.add_argument('model_folder', type=str, help='model folder to create metadata.yaml file for')
     parser.add_argument('mech_filename', type=str, help='relative path to mechanism file to include inside the metadata.yaml file')
+    parser.add_argument('--version', type=float, default=2.0, help='version of model, assuming CTV2 by default')
     args = parser.parse_args()
 
     # NOTE: as of right now the code ignores the rpath & wpath variables
-    cfg = {'rpath': 'regressor', 'wpath': 'weights.csv', 'version': 1.0}
+    cfg = {'rpath': 'regressor', 'wpath': 'weights.csv', 'version': args.version}
     cfg['name']=os.path.basename(args.model_folder)
     cfg['mechanism']=os.path.basename(args.mech_filename)
     
